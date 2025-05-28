@@ -9,7 +9,7 @@
   <body>
     <div id="todo">
       <header>
-        <h1>Todo List - 02 등록 :)</h1>
+        <h1>Todo List - 03 수정 :)</h1>
         <p>파일 경로: <span id="filepath"></span></p>
       </header>
       <div id="main">
@@ -155,10 +155,31 @@
         console.log(num, "완료/미완료");
         // 데이터 갱신, itemList에서 num에 해당하는 item의 done 값을 수정
         // itemList에서 num 값으로 item 조회
+        // let selectedItem;
+        // itemList.forEach((item) => {
+        //   if (item.num === num) {
+        //     selectedItem = item;
+        //   }
+        // });
 
+        const selectedItem = itemList.find((item) => item.num === num);
+        console.log(selectedItem);
         // item의 done 값을 수정
+        selectedItem.done = !selectedItem.done;
 
         // 화면 갱신, done 값에 따라서 <s> 추가 또는 삭제
+        const targetLi = document.querySelector(
+          `.todolist > li[data-num="${num}"]`
+        );
+        const titleSpan = targetLi.children[1];
+        if (selectedItem.done) {
+          const sElem = document.createElement("s");
+          sElem.appendChild(titleSpan.firstChild);
+          titleSpan.appendChild(sElem);
+        } else {
+          titleSpan.appendChild(titleSpan.firstChild.lastChild);
+          titleSpan.firstChild.remove();
+        }
       }
 
       // 할일 삭제
