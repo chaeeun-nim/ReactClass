@@ -1,7 +1,5 @@
-
-
 import { useState } from 'react';
-import './App.css'
+
 
 function App() {
   const [position,setPosition] = useState({x:50, y:150})
