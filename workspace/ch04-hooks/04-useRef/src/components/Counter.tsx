@@ -1,5 +1,5 @@
 import Button from "@components/Button";
-import { useReducer, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 
 interface CounterProps {
   children: string;
@@ -43,28 +43,36 @@ function Counter({ children='0' }: CounterProps){
   const initCount = Number(children);
 
   const [ count, countDispatch ] = useReducer(counterReducer, initCount);
-  const [step, setStep] = useState(1);
+
+  // 값이 바뀌어도 리렌더링이 되지 않아야함!(그냥 증감치를 변경해주는건데 굳이 버튼이나 count까지 리랜더링이 될필요가없음..)
+  const stepRef = useRef(initCount); // {current : 100}
+
+
+  // 객체에 직접 참조 할때
+  const stepElem = useRef<HTMLInputElement>(null);
 
 
   // 카운터 감소
   function handleDown() {
-    countDispatch({ type: 'DOWN', value: step });
+    countDispatch({ type: 'DOWN', value: stepRef.current });
   };
 
   // 카운터 증가
   function handleUp() {
-    countDispatch({ type: 'UP', value: step });
+    countDispatch({ type: 'UP', value: stepRef.current });
   };
 
   // 카운터 초기화
   function handleReset() {
     countDispatch({ type: 'RESET', value: initCount });
+    stepElem.current?.focus()
   };
 
   // 증감값 변경 처리
   function handleStepChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newStep = Number(e.target.value);
-    setStep(newStep);
+    stepRef.current = newStep
+    
   }
 
   return (
@@ -74,7 +82,8 @@ function Counter({ children='0' }: CounterProps){
       <input 
         id="step" 
         type="number" 
-        value={ step } 
+        ref={ stepElem }
+        defaultValue={ stepRef.current } 
         onChange={ handleStepChange } 
       />
       <Button color="red" onClick={ handleDown }>-_-</Button>

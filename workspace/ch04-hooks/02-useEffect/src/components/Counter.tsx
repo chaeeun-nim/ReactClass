@@ -15,12 +15,12 @@ function Counter({children = '1'}:CounterProps){
   const [step, setStep] = useState(initCount);
 
     // TODO 1. 1초 후에 handleUp()을 호출해서 자동으로 값 한번 증가
-  useEffect(()=>{
-  setTimeout(()=>{
-    handleUp();
-    console.log('마운트 후에 한번만 호출, dependencies에 빈배열을 저장하면 마운트된 후에 한번만 호출됨.');
-  },1000)
-  }, []);
+  // useEffect(()=>{
+  // setTimeout(()=>{
+  //   handleUp();
+  //   console.log('마운트 후에 한번만 호출, dependencies에 빈배열을 저장하면 마운트된 후에 한번만 호출됨.');
+  // },1000)
+  // }, []);
   
   // useEffect(()=>{
   // setTimeout(()=>{
@@ -29,25 +29,45 @@ function Counter({children = '1'}:CounterProps){
   // },1000)
   // });
 
-  // TODO 2. 증감값을 입력하면 입력값만큼 증감
-  
+  // TODO 2. 증감값을 입력하면 입력값만큼 증감(증감이 변하면 자동으로 1회 한번 서비스로 올려줌)
+  // useEffect(()=>{
+  //   setTimeout(()=>{
+  //     handleUp();
+  //   },1000)
+  //   console.log(step, 'dependencies에 값을 지정하면 컴포넌트가 업데이트 될 때 지정한 값중 하나라도 수정되었을 경우 호출됨.');
+  // }, [step]);
 
+
+  useEffect(()=>{
+    console.log('setup 함수 호출');
+    const timer = setInterval(( ) => {
+      console.log(new Date());
+    }, 1000);
+    return() => {// cleanup(컴포넌트가 언마운트 될 때 호출, setup함수에서 생성한 자원을 해제하는 코드 작성)
+      console.log('cleanup함수 호출');
+      clearInterval(timer)
+    };
+  })
 
   // 카운터 감소
   const handleDown = () => {
-    setCount(count - 1);
+    setCount(count - step);
   };
 
   // 카운터 증가
   const handleUp = () => {
-    setCount(count + 1);
+    setCount(count + step);
   };
 
   // 카운터 초기화
   const handleReset = () => {
     setCount(0);
   };
+  console.log('렌더링 중', document.querySelector('span')?.textContent);
 
+  useEffect(() => {
+    console.log('렌더링 후', document.querySelector('span')?.textContent);
+  });
 
 
   return (
