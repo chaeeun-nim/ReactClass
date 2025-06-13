@@ -1,9 +1,10 @@
 import Shipping from "./Shipping.tsx";
 import Product from "./Product.tsx";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import Price from "./Price.tsx";
 
 function App() {
+  "use no memo";
   const data = {
     _id: 2,
     price: 125000,
@@ -28,13 +29,13 @@ function App() {
   };
 
   // 결제 버튼 클릭 시 결제 확인 메시지 표시
-  const handlePayment = useCallback(() => {
-    alert(`배송비가 ${shippingFees}원 추가 됩니다. 상품을 결제하시겠습니까?`);
-  }, [shippingFees]);
+  const handlePayment = () => {
+    alert(`배송비 ${shippingFees}원이 추가됩니다. 상품을 결제하시겠습니까?`);
+  };
 
   return (
     <>
-      <h1>06 useCallback(함수 자체를 memoize), React.memo(컴포넌트를 memoize)</h1>
+      <h1>07 React Compiler를 사용한 메모이제이션</h1>
       <Product name={data.name} price={data.price} mainImage={data.mainImage} content={data.content} />
       <Price
         price={data.price}

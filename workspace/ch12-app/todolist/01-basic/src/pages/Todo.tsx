@@ -1,8 +1,12 @@
-import Todo from "@pages/Todo";
+
+import TodoInput from "@pages/TodoInput";
 import type { TodoItem } from "@pages/TodoItem";
+import TodoList from "@pages/TodoList";
 import { useState } from "react";
 
-function TodoContainer(){
+function Todo(){
+  console.log('\tTodo 렌더링');
+
   // 샘플 목록
   const initItemList: TodoItem[] = [
     { _id: 1, title: '자바스크립트 공부', done: true },
@@ -11,7 +15,7 @@ function TodoContainer(){
   ];
 
   // 상태가 수정되면 자동으로 화면이 리렌더링 된다.
-  const [ itemList, setItemList ] = useState(initItemList);
+  const [itemList, setItemList] = useState(initItemList);
 
   // 할일 추가
   const addItem = (title: string) => {
@@ -32,8 +36,18 @@ function TodoContainer(){
   }
 
   return (
-    <Todo itemList={ itemList } addItem={ addItem } toggleDone={ toggleDone } deleteItem={ deleteItem } />
+    <div id="main">
+      <div id="container">
+        <ul>
+          <li>
+            <h2>할일 목록</h2>
+            <TodoInput addItem={ addItem } />
+            <TodoList itemList={ itemList } toggleDone={ toggleDone } deleteItem={ deleteItem } />
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }
 
-export default TodoContainer;
+export default Todo;
