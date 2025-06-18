@@ -1,4 +1,6 @@
+import Layout from "@components/Layout";
 import About from "@pages/About";
+import ErrorPage from "@pages/ErrorPage";
 import Home from "@pages/Home";
 import TodoAdd from "@pages/TodoAdd";
 import TodoEdit from "@pages/TodoEdit";
@@ -7,13 +9,24 @@ import TodoList from "@pages/TodoList";
 import { createBrowserRouter, Navigate } from "react-router";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Navigate to="/home" /> },
-  { path: "/home", element: <Home /> },
-  { path: "/about", element: <About /> },
-  { path: "/todolist", element: <TodoList /> },
-  { path: "/todoedit", element: <TodoEdit /> },
-  { path: "/todoinfo", element: <TodoInfo /> },
-  { path: "/todoadd", element: <TodoAdd /> },
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "home", element: <Navigate to="/" /> },
+      { path: "about", element: <About /> },
+      { path: "list", element: <TodoList /> },
+      {
+        path: "list/:_id",
+        element: <TodoInfo />,
+        children: [{ path: "edit", element: <TodoEdit /> }],
+      },
+
+      { path: "add", element: <TodoAdd /> },
+    ],
+  },
 ]);
 
 export default router;

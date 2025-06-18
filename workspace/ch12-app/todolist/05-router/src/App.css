@@ -1,0 +1,39 @@
+/* body,
+* {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-align: center;
+} */
+
+h1 {
+  text-align: center;
+}
+
+.todoapp {
+  background-color: #eee;
+}
+header {
+  ul {
+    margin: 50px 0;
+  }
+
+  li {
+    box-sizing: border-box;
+    display: inline;
+  }
+}
+.menu-dark {
+  background-color: black;
+  border: 1px solid #333;
+  color: white;
+  padding: 8px 16px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.menu {
+  padding: 8px 16px;
+  border: 1px solid #333;
+}

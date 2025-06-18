@@ -1,15 +1,9 @@
 import { RouterProvider } from "react-router";
-import router from "./routes.tsx";
+import router from "./routes";
+import "./App.css";
 
 function App() {
-  return (
-    <>
-      <RouterProvider router={router} />
-      {/* <Header />
-      <div className="main"></div>
-      <Footer /> */}
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
